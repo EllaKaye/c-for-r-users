@@ -9,6 +9,8 @@ format:
       data-background-image: warwick-logo-white.png
       data-background-size: 15%
       data-background-position: 100% 0%
+execute:
+  echo: true
 ---
 
 ## About me 
@@ -24,13 +26,18 @@ format:
 
 ## Why C?
 
-- As R users: 
-  - encounter C code when debugging
-- As R contributors: 
-  - find root cause of bug 
-  - propose a patch to the C code to fix a bug
-- As R developers:
-  - Write efficient, portable code
+### As R users
+
+- encounter C code when debugging
+
+### As R contributors
+
+- find root cause of bug 
+- propose a patch to the C code to fix a bug
+
+### As R developers
+
+- Write efficient, portable code
 
 # R developers {.inverse}
 
@@ -60,7 +67,17 @@ In these case it can make sense to code parts in C or C++.
 - Portability (e.g. can also call from Python)
 - Building on other people's C code
 
-# R users {.inverse}
+# R users/programmers {.inverse}
+
+## Something is not quite right
+
+```{r}
+a <- c(8.48, 9.58, 9.96)
+stem(a)
+```
+
+## Check the code
+
 
 # R contributors {.inverse}
 
@@ -68,7 +85,102 @@ In these case it can make sense to code parts in C or C++.
 
 ## The original idea
 
+Want, e.g. "#ba1" to be interpretted as "#bbaa11".
+
 {{< mastodon https://fosstodon.org/@coolbutuseless/110972696890598490 >}}
+
+## The existing code 
+
+:::{.smaller80}
+```{.r}
+static rcolor rgb2col(const char *rgb)
+{
+    unsigned int r = 0, g = 0, b = 0, a = 0; /* -Wall */
+    if(rgb[0] != '#')
+	      error(_("invalid RGB specification"));
+    switch (strlen(rgb)) {
+    case 9:
+	      a = 16 * hexdigit(rgb[7]) + hexdigit(rgb[8]);
+    case 7:
+	      r = 16 * hexdigit(rgb[1]) + hexdigit(rgb[2]);
+	      g = 16 * hexdigit(rgb[3]) + hexdigit(rgb[4]);
+	      b = 16 * hexdigit(rgb[5]) + hexdigit(rgb[6]);
+	      break;
+    default:
+	      error(_("invalid RGB specification"));
+    }
+
+    if(strlen(rgb) == 7) 
+        return R_RGB(r, g, b);
+    else
+        return R_RGBA(r, g, b, a);
+}
+```
+:::
+
+## The fix: part 1
+
+:::{.smaller90}
+```{r}
+#| eval: false
+#| code-line-numbers: "9-16" 
+switch (strlen(rgb)) {
+case 9:
+    a = 16 * hexdigit(rgb[7]) + hexdigit(rgb[8]);
+case 7:
+    r = 16 * hexdigit(rgb[1]) + hexdigit(rgb[2]);
+    g = 16 * hexdigit(rgb[3]) + hexdigit(rgb[4]);
+    b = 16 * hexdigit(rgb[5]) + hexdigit(rgb[6]);
+    break;
+case 5: 
+  // Equivalent to 16 * hexdigit(rgb[4]) + hexdigit(rgb[4]);
+  a = (16 + 1) * hexdigit(rgb[4]);
+case 4:
+  r = (16 + 1) * hexdigit(rgb[1]);
+  g = (16 + 1) * hexdigit(rgb[2]);
+  b = (16 + 1) * hexdigit(rgb[3]);
+  break;
+default:
+    error(_("invalid RGB specification"));
+}
+```
+:::
+
+## The fix: part 2
+```{r}
+#| eval: false
+switch(strlen(rgb)) {
+case 7: 
+case 4:
+    return R_RGB(r, g, b);
+default:
+    return R_RGBA(r, g, b, a);
+}
+```
+
+# Learning more {.inverse}
+
+## C study group 
+
+<https://contributor.r-project.org/events/c-study-group-2024/>
+
+- Will run again January--June 2025, details TBC
+
+- Monthly meetings, weekly suggestions
+
+- Work through sessions 1-5 of Harvard's CS50 course
+
+  [cs50.harvard.edu/x](https://cs50.harvard.edu/x)
+- R's C API
+
+## Resources: R's C API
+
+- Deep R: <https://deepr.gagolewski.com/chapter/310-compiled.html>
+- Advanced R, Hadley Wickham, (1st edn): <http://adv-r.had.co.nz/C-interface.html>
+- Now You C Me, Davis Vaughn: <https://blog.davisvaughan.com/posts/2019-03-02-now-you-c-me>
+- Writing R Extensions (Ch 5 and 6): <https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-exts.html>
+- R internals (Hadley Wickham): <https://github.com/hadley/r-internals>
+- R internals (R Core): <https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-ints.html>
 
 ```{=html}
 <!-- needs to be last chunk of presentation otherwise creates an extra slide -->
