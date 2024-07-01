@@ -60,6 +60,16 @@ In these case it can make sense to code parts in C or C++.
 - Portability (e.g. can also call from Python)
 - Building on other people's C code
 
+# R users {.inverse}
+
+# R contributors {.inverse}
+
+# 3-digit hex case-study {.inverse}
+
+## The original idea
+
+{{< mastodon https://fosstodon.org/@coolbutuseless/110972696890598490 >}}
+
 ```{=html}
 <!-- needs to be last chunk of presentation otherwise creates an extra slide -->
 <!-- requires Quarto v1.3 -->
