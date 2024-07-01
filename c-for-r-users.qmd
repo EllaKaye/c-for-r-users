@@ -1,8 +1,7 @@
 ---
-title: A University of Warwick Presentation
-subtitle: Subtitle
-author: Your Name
-date: last-modified
+title: C for R users
+author: Ella Kaye
+date: 2024-07-10
 date-format: long
 format: 
   warwickpres-revealjs: 
@@ -10,173 +9,56 @@ format:
       data-background-image: warwick-logo-white.png
       data-background-size: 15%
       data-background-position: 100% 0%
-### To remove the logo from the title page, 
-### delete lines 7-12 above and uncomment the two lines below
-#format:
-#  warwickpres-revealjs: default
 ---
 
-## Introduction
+## About me 
 
-This is a Quarto presentation format that is consistent with The University of Warwick's [brand](https://warwick.ac.uk/about/brand/), especially its [colours](https://warwick.ac.uk/about/brand/brand-guidelines/colours/) and [typography](https://warwick.ac.uk/about/brand/brand-guidelines/typography/).
-
-It also features the University of Warwick logo on the title slide.
-
-. . .
-
-:::{.callout-note}
-To remove the logo from the title slide, delete the replace lines 7-12 of this `.qmd` file and uncomment lines 15-16.
+::: {.incremental}
+- Research Software Engineer at University of Warwick
+- Sustainability and EDI in the R Project
+- R user/developer for 10 years
+- Learning C for about a year
 :::
 
-:::{.notes}
-Speaker notes go here.
-:::
+## What is C and how does it relate to R?
 
-# inverse class for section headings {.inverse}
+## Why C?
 
-## {.inverse .center-h .center .larger125}
+- As R users: 
+  - encounter C code when debugging
+- As R contributors: 
+  - find root cause of bug 
+  - propose a patch to the C code to fix a bug
+- As R developers:
+  - Write efficient, portable code
 
-inverse class is also useful for stressing *key points*. 
+# R developers {.inverse}
 
-## Colours
+## Limits of R
 
-There's a colour for inline code such as `x <- c(1, 3, 6)` and `{.inverse}`.
+Sometimes you reach the limits of R:
 
-There's also a colour for short [links](https://github.com/Warwick-Stats-Resources/warwickpres) and full ones like <https://quarto.org/docs/presentations/revealjs/>.
+- Your code is still slow despite optimizing the computational approach and the R implementation
+- You could speed up the R code, but it results in very obscure, convoluted code
 
-## Colours {.inverse}
+In these case it can make sense to code parts in C or C++.
 
-There's a colour for inline code such as `x <- c(1, 3, 6)` and `{.inverse}`.
+## Typical scenarios
 
-There's also a colour for short [links](https://github.com/Warwick-Stats-Resources/warwickpres) and full ones like <https://quarto.org/docs/presentations/revealjs/>.
+- Loops that can’t be vectorized because iterations depend on previous results
+- Recursive functions, or problems which involve calling functions millions of times.
+- Problems that require advanced data structures and algorithms that R doesn’t provide.
 
-- The inline code and link colours change when the inverse class is applied.
+## You *almost certainly* want C++ with Rcpp
 
-## Code
+- Protects you from many of the historical idiosyncracies of R's C API
+- Takes care of memory management
+- Provides many useful helper methods
 
-The extension includes a custom syntax highlighting theme:
+## But you *might* want/need C
 
-```{r}
-#| echo: true
-#| eval: false
-library(dplyr)
-library(palmerpenguins)
-
-penguins %>%
-  mutate(
-    long_flipper = case_when(
-      species == "Adelie" & flipper_length_mm > 195 ~ TRUE,
-      species == "Chinstrap" & flipper_length_mm > 200 ~ TRUE,
-      species == "Gentoo" & flipper_length_mm > 225 ~ TRUE,
-      TRUE ~ FALSE
-    )
-  ) %>%
-  mutate(
-    body_mass_kg = body_mass_g / 1000,
-    bill_length_cm = bill_length_mm / 10,
-    bill_depth_cm = bill_depth_mm / 10
-  )
-```
-
-## warwickplots
-
-For plotting, the warwickpres extension goes hand-in-hand with the **warwickplots** R package, which provides colour palettes and a ggplot2 theme, `theme_warwick()`, that are also consistent with the University of Warwick's branding.
-
-<https://warwick-stats-resources.github.io/warwickplots/>
-
-```{r}
-#| echo: false
-library(warwickplots)
-plot(warwick_palettes)
-```
-
-
-## warwickplots example
-
-```{r}
-#| echo: true
-#| output-location: slide
-#| code-line-numbers: "|9,15"
-library(ggplot2)
-library(warwickplots)
-library(palmerpenguins)
-
-ggplot(penguins, aes(flipper_length_mm, body_mass_g, group = species)) +
-  geom_point(aes(colour = species, shape = species), 
-             alpha = 0.8, 
-             size = 2) +
-  scale_color_palette_d(warwick_palettes$primary) +
-  labs(title = "Penguin Size, Palmer Station LTER",
-       subtitle = "Flipper length and body mass for **<span style = 'color:#3C1053;'>Adelie</span>**, **<span style = 'color:#6DCDB8;'>Chinstrap</span>** and **<span style = 'color:#CB333B;'>Gentoo</span>** Penguins. This is based on data made available in the **palmerpenguins** R package.",
-       caption = "Visualization: Ella Kaye, Data: Gorman, Williams & Fraser (2014) DOI: 10.1371/journal.pone.009008",
-       x = "flipper length (mm)",
-       y = "body mass (g)") +
-  theme_warwick() +
-  theme(legend.position = 'none')
-```
-
-## Callouts {.smaller60}
-
-There are custom colours for callouts: 
-
-:::{.callout-note}
-A note
-:::
-
-:::{.callout-warning}
-A warning
-:::
-
-:::{.callout-important}
-Something important
-:::
-
-:::{.callout-tip}
-This is a good idea
-:::
-
-:::{.callout-caution}
-Be careful about doing this
-:::
-
-These require a raw html chunk at the end of the presentation `.qmd` file (included in template). Callouts do **not** look good on the inverse background.
-
-
-# Non-Warwick-specific nice-to-haves {.inverse}
-
-## Alignment
-
-There are classes to help with text alignment:
-
-:::{.center-h}
-`{.center-h}` gives horizontally-centered text
-:::
-
-:::{.right}
-`{.right}` gives right-aligned text
-:::
-
-:::{.callout-note}
-For all revealjs Quarto presentations, applying `{.center}` to the slide title vertically centers the whole slide.
-:::
-
-## Sizing
-
-There are classes to help size text by a given percentage:
-
-[`{.smaller90}`]{.smaller90}, [`{.smaller80}`]{.smaller80}, [`{.smaller75}`]{.smaller75}
-[`{.smaller70}`]{.smaller70}, [`{.smaller60}`]{.smaller60}, [`{.smaller50}`]{.smaller50}
-
-[`{.larger125}`]{.larger125}, [`{.larger150}`]{.larger150}, [`{.larger175}`]{.larger175}, 
-[`{.larger200}`]{.larger200}, [`{.larger250}`]{.larger250}
-
-## More information
-
-You can learn more about Quarto Revealjs presentations at <https://quarto.org/docs/presentations/revealjs/>
-
-You can learn more about Quarto extensions at <https://quarto.org/docs/extensions/>
-
-You can find these slides at <https://warwick-stats-resources.github.io/warwickpres/>
+- Portability (e.g. can also call from Python)
+- Building on other people's C code
 
 ```{=html}
 <!-- needs to be last chunk of presentation otherwise creates an extra slide -->
