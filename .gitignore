@@ -4,6 +4,7 @@
 .httr-oauth
 .DS_Store
 .quarto
+.vdoc.r
 
 c-for-r-users.html
 c-for-r-users_files/
