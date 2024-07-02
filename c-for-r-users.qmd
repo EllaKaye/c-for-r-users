@@ -11,13 +11,15 @@ format:
       data-background-position: 100% 0%
 execute:
   echo: true
+filters:
+  - line-highlight
 ---
 
 ## About me 
 
 ::: {.incremental}
 - Research Software Engineer at University of Warwick
-- Sustainability and EDI in the R Project
+- Sustainability and EDI in the R Project (with Heather Turner)
 - R user/developer for 10 years
 - Learning C for about a year
 :::
@@ -69,15 +71,107 @@ In these case it can make sense to code parts in C or C++.
 
 # R users/programmers {.inverse}
 
-## Something is not quite right
+## When something doesn't look right
+
+<https://bugs.r-project.org/show_bug.cgi?id=8934>
 
 ```{r}
 a <- c(8.48, 9.58, 9.96)
 stem(a)
+stem(2)
+stem(c(2, 2))
 ```
 
 ## Check the code
 
+```{r}
+#| class-output: "highlight numberLines"
+#| output-line-numbers: "13"
+stem
+```
+
+
+## There's C!
+
+`.Call(C_StemLeaf, as.double(x), scale, width, atom)`
+
+. . .
+
+```{r}
+#| error: true
+C_StemLeaf
+```
+
+## Where's C?
+
+[github.com/r-devel/r-svn](https://github.com/r-devel/r-svn)
+
+![](images/C_StemLeaf-search.png)
+
+
+## C_StemLeaf
+
+R's C API
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|1,15" 
+SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom)
+{
+    if(TYPEOF(x) != REALSXP || TYPEOF(scale) != REALSXP) 
+        error("invalid input");
+#ifdef LONG_VECTOR_SUPPORT
+    if (IS_LONG_VEC(x))
+	    error(_("long vector '%s' is not supported"), "x");
+#endif
+    int width = asInteger(swidth), n = LENGTH(x);
+    if (n == NA_INTEGER) error(_("invalid '%s' argument"), "x");
+    if (width == NA_INTEGER) error(_("invalid '%s' argument"), "width");
+    double sc = asReal(scale), sa = asReal(atom);
+    if (!R_FINITE(sc)) error(_("invalid '%s' argument"), "scale");
+    if (!R_FINITE(sa)) error(_("invalid '%s' argument"), "atom");
+    stem_leaf(REAL(x), n, sc, width, sa);
+    return R_NilValue;
+}
+```
+
+## stem_leaf
+
+Mix of pure C and R's C API
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|8,12" 
+static Rboolean
+stem_leaf(double *x, int n, double scale, int width, double atom)
+{
+    // <initialise variables>
+
+    R_rsort(x,n);
+
+    if(n <= 1) return FALSE;
+
+    //<more code here>
+    
+    /* Find the print width of the stem. */
+
+    lo = floor(x[0]*c/mu)*mu;
+    hi = floor(x[n-1]*c/mu)*mu;
+    ldigits = (lo < 0) ? (int) floor(log10(-(double)lo)) + 1 : 0;
+    hdigits = (hi > 0) ? (int) floor(log10((double)hi)): 0;
+    ndigits = (ldigits < hdigits) ? hdigits : ldigits;
+
+    /* Starting cell */
+
+    if(lo < 0 && floor(x[0]*c) == lo) lo = lo - mu;
+    hi = lo + mu;
+    if(floor(x[0]*c+0.5) > hi) {
+	      lo = hi;
+	      hi = lo + mu;
+    }
+  // <more code here>
+}
+```
 
 # R contributors {.inverse}
 
@@ -85,9 +179,9 @@ stem(a)
 
 ## The original idea
 
-Want, e.g. "#ba1" to be interpretted as "#bbaa11".
+Want, e.g. `"#ba1"` to be interpretted as `"#bbaa11"`.
 
-{{< mastodon https://fosstodon.org/@coolbutuseless/110972696890598490 >}}
+![](images/3-digit-hex-idea.png){fig-align="center" }
 
 ## The existing code 
 
@@ -147,6 +241,17 @@ default:
 :::
 
 ## The fix: part 2
+
+From
+```{r}
+#| eval: false
+if(strlen(rgb) == 7) 
+    return R_RGB(r, g, b);
+else
+    return R_RGBA(r, g, b, a);
+```
+
+to
 ```{r}
 #| eval: false
 switch(strlen(rgb)) {
