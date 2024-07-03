@@ -15,6 +15,18 @@ filters:
   - line-highlight
 ---
 
+## [ellakaye.github.io/c-for-r-users](https://ellakaye.github.io/c-for-r-users/#/title-slide) {.center-h}
+
+```{r}
+#| echo: false
+#| eval: false # after running once
+library(qrcode)
+slides_code <- qr_code("https://ellakaye.github.io/c-for-r-users")
+generate_svg(slides_code, "images/slides_qrcode.svg")
+```
+
+![](images/slides_qrcode.svg){fig-align="center"}
+
 ## About me 
 
 ::: {.incremental}
@@ -24,12 +36,41 @@ filters:
 - Learning C for about a year
 :::
 
+
+## This talk
+
+### What I'll do
+
+- Encourage you to learn C
+- Show you some C code in base R
+- Encourage you to contribute to base R
+
+:::{.fragment}
+### What I won't do
+
+- Assume you know any C
+- Try to teach you any C
+:::
+
 ## What is C and how does it relate to R?
+
+:::{.incremental}
+- C is a low-level, high-performance, compiled programming language
+- It provides fine-grained control over memory and hardware
+- Much of base R is written in C
+- R provides interfaces to compiled code
+- R has a C API to deal with R objects in C
+:::
+
+:::{.notes}
+C is a compiled language, meaning its code is translated directly into machine code by a compiler before execution, resulting in fast and efficient programs. In contrast, R is an interpreted language where code is executed line-by-line by an interpreter, typically resulting in slower performance but greater ease of use for tasks like statistical analysis and data manipulation.
+:::
 
 ## Why C?
 
-### As R users
+### As R users/developers
 
+- Write efficient, portable code
 - encounter C code when debugging
 
 ### As R contributors
@@ -37,26 +78,22 @@ filters:
 - find root cause of bug 
 - propose a patch to the C code to fix a bug
 
-### As R developers
-
-- Write efficient, portable code
-
-# R developers {.inverse}
+# Writing high-performance code {.inverse}
 
 ## Limits of R
 
 Sometimes you reach the limits of R:
 
 - Your code is still slow despite optimizing the computational approach and the R implementation
-- You could speed up the R code, but it results in very obscure, convoluted code
+- You *could* speed up the R code, but it results in very obscure, convoluted code
 
-In these case it can make sense to code parts in C or C++.
+In these cases it can make sense to code parts in C or C++ and call it from R.
 
 ## Typical scenarios
 
 - Loops that can’t be vectorized because iterations depend on previous results
-- Recursive functions, or problems which involve calling functions millions of times.
-- Problems that require advanced data structures and algorithms that R doesn’t provide.
+- Recursive functions, or problems which involve calling functions millions of times
+- Problems that require advanced data structures and algorithms that R doesn’t provide
 
 ## You *almost certainly* want C++ with Rcpp
 
@@ -69,7 +106,7 @@ In these case it can make sense to code parts in C or C++.
 - Portability (e.g. can also call from Python)
 - Building on other people's C code
 
-# R users/programmers {.inverse}
+# Digging into a bug {.inverse}
 
 ## When something doesn't look right
 
@@ -84,10 +121,28 @@ stem(c(2, 2))
 
 ## Check the code
 
-```{r}
-#| class-output: "highlight numberLines"
-#| output-line-numbers: "13"
+```{.r}
 stem
+```
+
+```{r}
+#| eval: false
+#| code-line-numbers: "|13" 
+function (x, scale = 1, width = 80, atom = 1e-08) 
+{
+    if (!is.numeric(x)) 
+        stop("'x' must be numeric")
+    x <- x[is.finite(x)]
+    n <- as.integer(length(x))
+    if (is.na(n)) 
+        stop("invalid length(x)")
+    if (n == 0) 
+        stop("no finite and non-missing values")
+    if (scale <= 0) 
+        stop("'scale' must be positive")
+    .Call(C_StemLeaf, as.double(x), scale, width, atom)
+    invisible(NULL)
+}
 ```
 
 
@@ -115,10 +170,10 @@ R's C API
 
 ```{r}
 #| eval: false
-#| code-line-numbers: "|1,15" 
+#| code-line-numbers: "|1,3,15" 
 SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom)
 {
-    if(TYPEOF(x) != REALSXP || TYPEOF(scale) != REALSXP) 
+    if (TYPEOF(x) != REALSXP || TYPEOF(scale) != REALSXP) 
         error("invalid input");
 #ifdef LONG_VECTOR_SUPPORT
     if (IS_LONG_VEC(x))
@@ -134,6 +189,10 @@ SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom)
     return R_NilValue;
 }
 ```
+
+:::{.notes}
+At the C-level, all R objects are stored in a common datatype, the SEXP, or S-expression. All R objects are S-expressions so every C function that you create must return a SEXP as output and take SEXPs as inputs.
+:::
 
 ## stem_leaf
 
@@ -173,7 +232,34 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 }
 ```
 
-# R contributors {.inverse}
+:::{.notes}
+In the same file as C_StemLeaf
+:::
+
+## A note about interfaces
+
+We've seen `.Call()`
+
+In base R, there's also `.Internal()` and `.Primitive()`
+
+e.g. the source code for `tabulate` includes:
+
+```{.r}
+.Internal(tabulate(bin, nbins))
+```
+
+:::{.notes}
+First need to look for their C function name in src/main/names.c and then search the R source code. 
+:::
+
+We can find the underlying code on GitHub with
+
+```{r}
+#| eval: false
+pryr::show_c_source(.Internal(tabulate(bin, nbins)))
+```
+
+# Contributing {.inverse}
 
 # 3-digit hex case-study {.inverse}
 
@@ -186,7 +272,8 @@ Want, e.g. `"#ba1"` to be interpretted as `"#bbaa11"`.
 ## The existing code 
 
 :::{.smaller80}
-```{.r}
+```{c eval=FALSE}
+/* #RRGGBB[AA] String to Internal Color Code */
 static rcolor rgb2col(const char *rgb)
 {
     unsigned int r = 0, g = 0, b = 0, a = 0; /* -Wall */
@@ -215,8 +302,7 @@ static rcolor rgb2col(const char *rgb)
 ## The fix: part 1
 
 :::{.smaller90}
-```{r}
-#| eval: false
+```{c eval=FALSE}
 #| code-line-numbers: "9-16" 
 switch (strlen(rgb)) {
 case 9:
@@ -243,8 +329,7 @@ default:
 ## The fix: part 2
 
 From
-```{r}
-#| eval: false
+```{c eval=FALSE}
 if(strlen(rgb) == 7) 
     return R_RGB(r, g, b);
 else
@@ -252,8 +337,7 @@ else
 ```
 
 to
-```{r}
-#| eval: false
+```{c eval=FALSE}
 switch(strlen(rgb)) {
 case 7: 
 case 4:
@@ -262,6 +346,10 @@ default:
     return R_RGBA(r, g, b, a);
 }
 ```
+
+:::{.notes}
+There were actually six files we needed to change, including documentation, tests and news
+:::
 
 # Learning more {.inverse}
 
@@ -278,6 +366,16 @@ default:
   [cs50.harvard.edu/x](https://cs50.harvard.edu/x)
 - R's C API
 
+- Run by R Contribution Working Group (RCWG)
+
+## RCWG
+
+Fosters a larger, more diverse community of contributors to base R.
+
+- [contributor.r-project.org](https://contributor.r-project.org)
+- [meetup.com/r-contributors](https://www.meetup.com/r-contributors/)
+- [hachyderm.io/@R_Contributors](https://hachyderm.io/@R_Contributors)
+
 ## Resources: R's C API
 
 - Deep R: <https://deepr.gagolewski.com/chapter/310-compiled.html>
@@ -286,6 +384,12 @@ default:
 - Writing R Extensions (Ch 5 and 6): <https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-exts.html>
 - R internals (Hadley Wickham): <https://github.com/hadley/r-internals>
 - R internals (R Core): <https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-ints.html>
+
+## Thank you! Questions? {.center-h}
+
+[ellakaye.github.io/c-for-r-users](https://ellakaye.github.io/c-for-r-users/#/title-slide){.larger150}
+
+![](images/slides_qrcode.svg){fig-align="center"}
 
 ```{=html}
 <!-- needs to be last chunk of presentation otherwise creates an extra slide -->
