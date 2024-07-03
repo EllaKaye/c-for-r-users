@@ -7,13 +7,6 @@
 <link href="c-for-r-users_files/libs/quarto-html/tippy.css" rel="stylesheet">
 <link href="c-for-r-users_files/libs/quarto-html/light-border.css" rel="stylesheet">
 <link href="c-for-r-users_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
-<link href="c-for-r-users_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><script src="c-for-r-users_files/libs/clipboard/clipboard.min.js"></script>
-<script src="c-for-r-users_files/libs/quarto-html/tabby.min.js"></script>
-<script src="c-for-r-users_files/libs/quarto-html/popper.min.js"></script>
-<script src="c-for-r-users_files/libs/quarto-html/tippy.umd.min.js"></script>
-<link href="c-for-r-users_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="c-for-r-users_files/libs/quarto-html/light-border.css" rel="stylesheet">
-<link href="c-for-r-users_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet" data-mode="light">
 <link href="c-for-r-users_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles"><meta charset="utf-8">
   <meta name="generator" content="quarto-1.4.549">
 
@@ -37,6 +30,72 @@
       margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
       vertical-align: middle;
     }
+    /* CSS for syntax highlighting */
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #adadbd;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #adadbd;  padding-left: 4px; }
+    div.sourceCode
+      { color: #2e2e2f;  }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span { color: #2e2e2f; } /* Normal */
+    code span.al { color: #ad2b32; } /* Alert */
+    code span.an { color: #494957; } /* Annotation */
+    code span.at { color: #59346d; } /* Attribute */
+    code span.bn { color: #ad2b32; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #c5651d; } /* ControlFlow */
+    code span.ch { color: #529a8a; } /* Char */
+    code span.cn { color: #c5651d; } /* Constant */
+    code span.co { color: #494957; } /* Comment */
+    code span.cv { color: #494957; font-style: italic; } /* CommentVar */
+    code span.do { color: #494957; font-style: italic; } /* Documentation */
+    code span.dt { color: #ad2b32; } /* DataType */
+    code span.dv { color: #ad2b32; } /* DecVal */
+    code span.er { color: #ad2b32; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #ad2b32; } /* Float */
+    code span.fu { color: #0090af; } /* Function */
+    code span.im { color: #59346d; } /* Import */
+    code span.in { color: #494957; } /* Information */
+    code span.kw { color: #2e2e2f; } /* Keyword */
+    code span.op { color: #494957; } /* Operator */
+    code span.ot { color: #494957; } /* Other */
+    code span.pp { color: #ad2b32; } /* Preprocessor */
+    code span.re { color: #0090af; } /* RegionMarker */
+    code span.sc { color: #494957; } /* SpecialChar */
+    code span.ss { color: #529a8a; } /* SpecialString */
+    code span.st { color: #529a8a; } /* String */
+    code span.va { color: #2e2e2f; } /* Variable */
+    code span.vs { color: #529a8a; } /* VerbatimString */
+    code span.wa { color: #494957; font-style: italic; } /* Warning */
   </style>
   <link rel="stylesheet" href="c-for-r-users_files/libs/revealjs/dist/theme/quarto.css">
   <link href="c-for-r-users_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
@@ -346,18 +405,441 @@ Ella Kaye
 
   <p class="date">July 10, 2024</p>
 </section>
+<section id="ellakaye.github.ioc-for-r-users" class="slide level2 center-h">
+<h2><a href="https://ellakaye.github.io/c-for-r-users/#/title-slide">ellakaye.github.io/c-for-r-users</a></h2>
+
+<img data-src="images/slides_qrcode.svg" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="about-me" class="slide level2">
 <h2>About me</h2>
+<div>
 <ul>
-<li>Research Software Engineer at University of Warwick</li>
-<li>Sustainability and EDI in the R Project</li>
+<li class="fragment">Research Software Engineer at University of Warwick</li>
+<li class="fragment">Sustainability and EDI in the R Project (with Heather Turner)</li>
+<li class="fragment">R user/developer for 10 years</li>
+<li class="fragment">Learning C for about a year</li>
 </ul>
+</div>
+</section>
+<section id="this-talk" class="slide level2">
+<h2>This talk</h2>
+<h3 id="what-ill-do">What I’ll do</h3>
+<ul>
+<li>Encourage you to learn C</li>
+<li>Show you some C code in base R</li>
+<li>Encourage you to contribute to base R</li>
+</ul>
+<div class="fragment">
+<!-- -->
+<h3 id="what-i-wont-do">What I won’t do</h3>
+<ul>
+<li>Assume you know any C</li>
+<li>Try to teach you any C</li>
+</ul>
+</div>
+</section>
+<section id="what-is-c-and-how-does-it-relate-to-r" class="slide level2">
+<h2>What is C and how does it relate to R?</h2>
+<div>
+<ul>
+<li class="fragment">C is a low-level, high-performance, compiled programming language</li>
+<li class="fragment">It provides fine-grained control over memory and hardware</li>
+<li class="fragment">Much of base R is written in C</li>
+<li class="fragment">R provides interfaces to compiled code</li>
+<li class="fragment">R has a C API to deal with R objects in C</li>
+</ul>
+</div>
+<aside class="notes">
+<p>C is a compiled language, meaning its code is translated directly into machine code by a compiler before execution, resulting in fast and efficient programs. In contrast, R is an interpreted language where code is executed line-by-line by an interpreter, typically resulting in slower performance but greater ease of use for tasks like statistical analysis and data manipulation.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="why-c" class="slide level2">
+<h2>Why C?</h2>
+<h3 id="as-r-usersdevelopers">As R users/developers</h3>
+<ul>
+<li>Write efficient, portable code</li>
+<li>encounter C code when debugging</li>
+</ul>
+<h3 id="as-r-contributors">As R contributors</h3>
+<ul>
+<li>find root cause of bug</li>
+<li>propose a patch to the C code to fix a bug</li>
+</ul>
+</section>
+<section>
+<section id="writing-high-performance-code" class="title-slide slide level1 inverse center">
+<h1>Writing high-performance code</h1>
+
+</section>
+<section id="limits-of-r" class="slide level2">
+<h2>Limits of R</h2>
+<p>Sometimes you reach the limits of R:</p>
+<ul>
+<li>Your code is still slow despite optimizing the computational approach and the R implementation</li>
+<li>You <em>could</em> speed up the R code, but it results in very obscure, convoluted code</li>
+</ul>
+<p>In these cases it can make sense to code parts in C or C++ and call it from R.</p>
+</section>
+<section id="typical-scenarios" class="slide level2">
+<h2>Typical scenarios</h2>
+<ul>
+<li>Loops that can’t be vectorized because iterations depend on previous results</li>
+<li>Recursive functions, or problems which involve calling functions millions of times</li>
+<li>Problems that require advanced data structures and algorithms that R doesn’t provide</li>
+</ul>
+</section>
+<section id="you-almost-certainly-want-c-with-rcpp" class="slide level2">
+<h2>You <em>almost certainly</em> want C++ with Rcpp</h2>
+<ul>
+<li>Protects you from many of the historical idiosyncracies of R’s C API</li>
+<li>Takes care of memory management</li>
+<li>Provides many useful helper methods</li>
+</ul>
+</section>
+<section id="but-you-might-wantneed-c" class="slide level2">
+<h2>But you <em>might</em> want/need C</h2>
+<ul>
+<li>Portability (e.g.&nbsp;can also call from Python)</li>
+<li>Building on other people’s C code</li>
+</ul>
+</section></section>
+<section>
+<section id="digging-into-a-bug" class="title-slide slide level1 inverse center">
+<h1>Digging into a bug</h1>
+
+</section>
+<section id="when-something-doesnt-look-right" class="slide level2">
+<h2>When something doesn’t look right</h2>
+<p><a href="https://bugs.r-project.org/show_bug.cgi?id=8934" class="uri">https://bugs.r-project.org/show_bug.cgi?id=8934</a></p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href=""></a>a <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">8.48</span>, <span class="fl">9.58</span>, <span class="fl">9.96</span>)</span>
+<span id="cb1-2"><a href=""></a><span class="fu">stem</span>(a)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  The decimal point is at the |
+
+  8 | 
+  8 | 5
+  9 | 
+  9 | 6
+  10 | 0</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href=""></a><span class="fu">stem</span>(<span class="dv">2</span>)</span>
+<span id="cb3-2"><a href=""></a><span class="fu">stem</span>(<span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+  The decimal point is at the |
+
+  2 | 00</code></pre>
+</div>
+</div>
+</section>
+<section id="check-the-code" class="slide level2">
+<h2>Check the code</h2>
+<div class="sourceCode" id="cb5"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href=""></a>stem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb6" data-code-line-numbers="|13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href=""></a><span class="cf">function</span> (x, <span class="at">scale =</span> <span class="dv">1</span>, <span class="at">width =</span> <span class="dv">80</span>, <span class="at">atom =</span> <span class="fl">1e-08</span>) </span>
+<span id="cb6-2"><a href=""></a>{</span>
+<span id="cb6-3"><a href=""></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">is.numeric</span>(x)) </span>
+<span id="cb6-4"><a href=""></a>        <span class="fu">stop</span>(<span class="st">"'x' must be numeric"</span>)</span>
+<span id="cb6-5"><a href=""></a>    x <span class="ot">&lt;-</span> x[<span class="fu">is.finite</span>(x)]</span>
+<span id="cb6-6"><a href=""></a>    n <span class="ot">&lt;-</span> <span class="fu">as.integer</span>(<span class="fu">length</span>(x))</span>
+<span id="cb6-7"><a href=""></a>    <span class="cf">if</span> (<span class="fu">is.na</span>(n)) </span>
+<span id="cb6-8"><a href=""></a>        <span class="fu">stop</span>(<span class="st">"invalid length(x)"</span>)</span>
+<span id="cb6-9"><a href=""></a>    <span class="cf">if</span> (n <span class="sc">==</span> <span class="dv">0</span>) </span>
+<span id="cb6-10"><a href=""></a>        <span class="fu">stop</span>(<span class="st">"no finite and non-missing values"</span>)</span>
+<span id="cb6-11"><a href=""></a>    <span class="cf">if</span> (scale <span class="sc">&lt;=</span> <span class="dv">0</span>) </span>
+<span id="cb6-12"><a href=""></a>        <span class="fu">stop</span>(<span class="st">"'scale' must be positive"</span>)</span>
+<span id="cb6-13"><a href=""></a>    <span class="fu">.Call</span>(C_StemLeaf, <span class="fu">as.double</span>(x), scale, width, atom)</span>
+<span id="cb6-14"><a href=""></a>    <span class="fu">invisible</span>(<span class="cn">NULL</span>)</span>
+<span id="cb6-15"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="theres-c" class="slide level2">
+<h2>There’s C!</h2>
+<p><code>.Call(C_StemLeaf, as.double(x), scale, width, atom)</code></p>
+<div class="fragment">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>C_StemLeaf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-error">
+<pre><code>Error in eval(expr, envir, enclos): object 'C_StemLeaf' not found</code></pre>
+</div>
+</div>
+</div>
+</section>
+<section id="wheres-c" class="slide level2">
+<h2>Where’s C?</h2>
+<p><a href="https://github.com/r-devel/r-svn">github.com/r-devel/r-svn</a></p>
+
+<img data-src="images/C_StemLeaf-search.png" class="r-stretch"></section>
+<section id="c_stemleaf" class="slide level2">
+<h2>C_StemLeaf</h2>
+<p>R’s C API</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb9" data-code-line-numbers="|1,3,15"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href=""></a>SEXP <span class="fu">C_StemLeaf</span>(SEXP x, SEXP scale, SEXP swidth, SEXP atom)</span>
+<span id="cb9-2"><a href=""></a>{</span>
+<span id="cb9-3"><a href=""></a>    <span class="cf">if</span> (<span class="fu">TYPEOF</span>(x) <span class="sc">!=</span> REALSXP <span class="sc">||</span> <span class="fu">TYPEOF</span>(scale) <span class="sc">!=</span> REALSXP) </span>
+<span id="cb9-4"><a href=""></a>        <span class="fu">error</span>(<span class="st">"invalid input"</span>);</span>
+<span id="cb9-5"><a href=""></a><span class="co">#ifdef LONG_VECTOR_SUPPORT</span></span>
+<span id="cb9-6"><a href=""></a>    <span class="cf">if</span> (<span class="fu">IS_LONG_VEC</span>(x))</span>
+<span id="cb9-7"><a href=""></a>        <span class="fu">error</span>(<span class="fu">_</span>(<span class="st">"long vector '%s' is not supported"</span>), <span class="st">"x"</span>);</span>
+<span id="cb9-8"><a href=""></a><span class="co">#endif</span></span>
+<span id="cb9-9"><a href=""></a>    int width <span class="ot">=</span> <span class="fu">asInteger</span>(swidth), n <span class="ot">=</span> <span class="fu">LENGTH</span>(x);</span>
+<span id="cb9-10"><a href=""></a>    <span class="cf">if</span> (n <span class="sc">==</span> NA_INTEGER) <span class="fu">error</span>(<span class="fu">_</span>(<span class="st">"invalid '%s' argument"</span>), <span class="st">"x"</span>);</span>
+<span id="cb9-11"><a href=""></a>    <span class="cf">if</span> (width <span class="sc">==</span> NA_INTEGER) <span class="fu">error</span>(<span class="fu">_</span>(<span class="st">"invalid '%s' argument"</span>), <span class="st">"width"</span>);</span>
+<span id="cb9-12"><a href=""></a>    double sc <span class="ot">=</span> <span class="fu">asReal</span>(scale), sa <span class="ot">=</span> <span class="fu">asReal</span>(atom);</span>
+<span id="cb9-13"><a href=""></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">R_FINITE</span>(sc)) <span class="fu">error</span>(<span class="fu">_</span>(<span class="st">"invalid '%s' argument"</span>), <span class="st">"scale"</span>);</span>
+<span id="cb9-14"><a href=""></a>    <span class="cf">if</span> (<span class="sc">!</span><span class="fu">R_FINITE</span>(sa)) <span class="fu">error</span>(<span class="fu">_</span>(<span class="st">"invalid '%s' argument"</span>), <span class="st">"atom"</span>);</span>
+<span id="cb9-15"><a href=""></a>    <span class="fu">stem_leaf</span>(<span class="fu">REAL</span>(x), n, sc, width, sa);</span>
+<span id="cb9-16"><a href=""></a>    return R_NilValue;</span>
+<span id="cb9-17"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside class="notes">
+<p>At the C-level, all R objects are stored in a common datatype, the SEXP, or S-expression. All R objects are S-expressions so every C function that you create must return a SEXP as output and take SEXPs as inputs.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="stem_leaf" class="slide level2">
+<h2>stem_leaf</h2>
+<p>Mix of pure C and R’s C API</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb10" data-code-line-numbers="|8,12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href=""></a>static Rboolean</span>
+<span id="cb10-2"><a href=""></a><span class="fu">stem_leaf</span>(double <span class="sc">*</span>x, int n, double scale, int width, double atom)</span>
+<span id="cb10-3"><a href=""></a>{</span>
+<span id="cb10-4"><a href=""></a>    <span class="sc">/</span><span class="er">/</span> <span class="er">&lt;</span>initialise variables<span class="sc">&gt;</span></span>
+<span id="cb10-5"><a href=""></a></span>
+<span id="cb10-6"><a href=""></a>    <span class="fu">R_rsort</span>(x,n);</span>
+<span id="cb10-7"><a href=""></a></span>
+<span id="cb10-8"><a href=""></a>    <span class="cf">if</span>(n <span class="sc">&lt;=</span> <span class="dv">1</span>) return <span class="cn">FALSE</span>;</span>
+<span id="cb10-9"><a href=""></a></span>
+<span id="cb10-10"><a href=""></a>    <span class="sc">/</span><span class="er">/&lt;</span>more code here<span class="sc">&gt;</span></span>
+<span id="cb10-11"><a href=""></a>    </span>
+<span id="cb10-12"><a href=""></a>    <span class="er">/*</span> Find the print width of the stem. <span class="sc">*</span><span class="er">/</span></span>
+<span id="cb10-13"><a href=""></a></span>
+<span id="cb10-14"><a href=""></a>    lo <span class="ot">=</span> <span class="fu">floor</span>(x[<span class="dv">0</span>]<span class="sc">*</span>c<span class="sc">/</span>mu)<span class="sc">*</span>mu;</span>
+<span id="cb10-15"><a href=""></a>    hi <span class="ot">=</span> <span class="fu">floor</span>(x[n<span class="dv">-1</span>]<span class="sc">*</span>c<span class="sc">/</span>mu)<span class="sc">*</span>mu;</span>
+<span id="cb10-16"><a href=""></a>    ldigits <span class="ot">=</span> (lo <span class="sc">&lt;</span> <span class="dv">0</span>) ? (int) <span class="fu">floor</span>(<span class="fu">log10</span>(<span class="sc">-</span>(double)lo)) <span class="sc">+</span> <span class="dv">1</span> <span class="sc">:</span> <span class="dv">0</span>;</span>
+<span id="cb10-17"><a href=""></a>    hdigits <span class="ot">=</span> (hi <span class="sc">&gt;</span> <span class="dv">0</span>) ? (int) <span class="fu">floor</span>(<span class="fu">log10</span>((double)hi))<span class="sc">:</span> <span class="dv">0</span>;</span>
+<span id="cb10-18"><a href=""></a>    ndigits <span class="ot">=</span> (ldigits <span class="sc">&lt;</span> hdigits) ? hdigits <span class="sc">:</span> ldigits;</span>
+<span id="cb10-19"><a href=""></a></span>
+<span id="cb10-20"><a href=""></a>    <span class="sc">/</span><span class="er">*</span> Starting cell <span class="sc">*</span><span class="er">/</span></span>
+<span id="cb10-21"><a href=""></a></span>
+<span id="cb10-22"><a href=""></a>    <span class="cf">if</span>(lo <span class="sc">&lt;</span> <span class="dv">0</span> <span class="sc">&amp;&amp;</span> <span class="fu">floor</span>(x[<span class="dv">0</span>]<span class="sc">*</span>c) <span class="sc">==</span> lo) lo <span class="ot">=</span> lo <span class="sc">-</span> mu;</span>
+<span id="cb10-23"><a href=""></a>    hi <span class="ot">=</span> lo <span class="sc">+</span> mu;</span>
+<span id="cb10-24"><a href=""></a>    <span class="cf">if</span>(<span class="fu">floor</span>(x[<span class="dv">0</span>]<span class="sc">*</span>c<span class="fl">+0.5</span>) <span class="sc">&gt;</span> hi) {</span>
+<span id="cb10-25"><a href=""></a>          lo <span class="ot">=</span> hi;</span>
+<span id="cb10-26"><a href=""></a>          hi <span class="ot">=</span> lo <span class="sc">+</span> mu;</span>
+<span id="cb10-27"><a href=""></a>    }</span>
+<span id="cb10-28"><a href=""></a>  <span class="sc">/</span><span class="er">/</span> <span class="er">&lt;</span>more code here<span class="sc">&gt;</span></span>
+<span id="cb10-29"><a href=""></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside class="notes">
+<p>In the same file as C_StemLeaf</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section>
+<section id="a-note-about-interfaces" class="slide level2">
+<h2>A note about interfaces</h2>
+<p>We’ve seen <code>.Call()</code></p>
+<p>In base R, there’s also <code>.Internal()</code> and <code>.Primitive()</code></p>
+<p>e.g.&nbsp;the source code for <code>tabulate</code> includes:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">.Internal</span>(<span class="fu">tabulate</span>(bin, nbins))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<aside class="notes">
+<p>First need to look for their C function name in src/main/names.c and then search the R source code.</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+<p>We can find the underlying code on GitHub with</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>pryr<span class="sc">::</span><span class="fu">show_c_source</span>(<span class="fu">.Internal</span>(<span class="fu">tabulate</span>(bin, nbins)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section></section>
+<section id="contributing" class="title-slide slide level1 inverse center">
+<h1>Contributing</h1>
+
+</section>
+
+<section>
+<section id="digit-hex-case-study" class="title-slide slide level1 inverse center">
+<h1>3-digit hex case-study</h1>
+
+</section>
+<section id="the-original-idea" class="slide level2">
+<h2>The original idea</h2>
+<p>Want, e.g.&nbsp;<code>"#ba1"</code> to be interpretted as <code>"#bbaa11"</code>.</p>
+
+<img data-src="images/3-digit-hex-idea.png" class="quarto-figure quarto-figure-center r-stretch"></section>
+<section id="the-existing-code" class="slide level2">
+<h2>The existing code</h2>
+<div class="smaller80">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href=""></a><span class="co">/* #RRGGBB[AA] String to Internal Color Code */</span></span>
+<span id="cb13-2"><a href=""></a><span class="dt">static</span> rcolor rgb2col<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>rgb<span class="op">)</span></span>
+<span id="cb13-3"><a href=""></a><span class="op">{</span></span>
+<span id="cb13-4"><a href=""></a>    <span class="dt">unsigned</span> <span class="dt">int</span> r <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> g <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> b <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> a <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* -Wall */</span></span>
+<span id="cb13-5"><a href=""></a>    <span class="cf">if</span><span class="op">(</span>rgb<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">!=</span> <span class="ch">'#'</span><span class="op">)</span></span>
+<span id="cb13-6"><a href=""></a>          error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
+<span id="cb13-7"><a href=""></a>    <span class="cf">switch</span> <span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb13-8"><a href=""></a>    <span class="cf">case</span> <span class="dv">9</span><span class="op">:</span></span>
+<span id="cb13-9"><a href=""></a>          a <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">7</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">8</span><span class="op">]);</span></span>
+<span id="cb13-10"><a href=""></a>    <span class="cf">case</span> <span class="dv">7</span><span class="op">:</span></span>
+<span id="cb13-11"><a href=""></a>          r <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
+<span id="cb13-12"><a href=""></a>          g <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
+<span id="cb13-13"><a href=""></a>          b <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">5</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">6</span><span class="op">]);</span></span>
+<span id="cb13-14"><a href=""></a>          <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb13-15"><a href=""></a>    <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb13-16"><a href=""></a>          error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
+<span id="cb13-17"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb13-18"><a href=""></a></span>
+<span id="cb13-19"><a href=""></a>    <span class="cf">if</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">)</span> <span class="op">==</span> <span class="dv">7</span><span class="op">)</span> </span>
+<span id="cb13-20"><a href=""></a>        <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb13-21"><a href=""></a>    <span class="cf">else</span></span>
+<span id="cb13-22"><a href=""></a>        <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span>
+<span id="cb13-23"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="the-fix-part-1" class="slide level2">
+<h2>The fix: part 1</h2>
+<div class="smaller90">
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb14" data-code-line-numbers="9-16"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb14-1"><a href=""></a><span class="cf">switch</span> <span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb14-2"><a href=""></a><span class="cf">case</span> <span class="dv">9</span><span class="op">:</span></span>
+<span id="cb14-3"><a href=""></a>    a <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">7</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">8</span><span class="op">]);</span></span>
+<span id="cb14-4"><a href=""></a><span class="cf">case</span> <span class="dv">7</span><span class="op">:</span></span>
+<span id="cb14-5"><a href=""></a>    r <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
+<span id="cb14-6"><a href=""></a>    g <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
+<span id="cb14-7"><a href=""></a>    b <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">5</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">6</span><span class="op">]);</span></span>
+<span id="cb14-8"><a href=""></a>    <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb14-9"><a href=""></a><span class="cf">case</span> <span class="dv">5</span><span class="op">:</span> </span>
+<span id="cb14-10"><a href=""></a>  <span class="co">// Equivalent to 16 * hexdigit(rgb[4]) + hexdigit(rgb[4]);</span></span>
+<span id="cb14-11"><a href=""></a>  a <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
+<span id="cb14-12"><a href=""></a><span class="cf">case</span> <span class="dv">4</span><span class="op">:</span></span>
+<span id="cb14-13"><a href=""></a>  r <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb14-14"><a href=""></a>  g <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
+<span id="cb14-15"><a href=""></a>  b <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">]);</span></span>
+<span id="cb14-16"><a href=""></a>  <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb14-17"><a href=""></a><span class="cf">default</span><span class="op">:</span></span>
+<span id="cb14-18"><a href=""></a>    error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
+<span id="cb14-19"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</div>
+</section>
+<section id="the-fix-part-2" class="slide level2">
+<h2>The fix: part 2</h2>
+<p>From</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb15-1"><a href=""></a><span class="cf">if</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">)</span> <span class="op">==</span> <span class="dv">7</span><span class="op">)</span> </span>
+<span id="cb15-2"><a href=""></a>    <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb15-3"><a href=""></a><span class="cf">else</span></span>
+<span id="cb15-4"><a href=""></a>    <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>to</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href=""></a><span class="cf">switch</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href=""></a><span class="cf">case</span> <span class="dv">7</span><span class="op">:</span> </span>
+<span id="cb16-3"><a href=""></a><span class="cf">case</span> <span class="dv">4</span><span class="op">:</span></span>
+<span id="cb16-4"><a href=""></a>    <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb16-5"><a href=""></a><span class="cf">default</span><span class="op">:</span></span>
+<span id="cb16-6"><a href=""></a>    <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span>
+<span id="cb16-7"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<aside class="notes">
+<p>There were actually six files we needed to change, including documentation, tests and news</p>
+<style type="text/css">
+        span.MJX_Assistive_MathML {
+          position:absolute!important;
+          clip: rect(1px, 1px, 1px, 1px);
+          padding: 1px 0 0 0!important;
+          border: 0!important;
+          height: 1px!important;
+          width: 1px!important;
+          overflow: hidden!important;
+          display:block!important;
+      }</style></aside>
+</section></section>
+<section>
+<section id="learning-more" class="title-slide slide level1 inverse center">
+<h1>Learning more</h1>
+
+</section>
+<section id="c-study-group" class="slide level2">
+<h2>C study group</h2>
+<p><a href="https://contributor.r-project.org/events/c-study-group-2024/" class="uri">https://contributor.r-project.org/events/c-study-group-2024/</a></p>
+<ul>
+<li><p>Will run again January–June 2025, details TBC</p></li>
+<li><p>Monthly meetings, weekly suggestions</p></li>
+<li><p>Work through sessions 1-5 of Harvard’s CS50 course</p>
+<p><a href="https://cs50.harvard.edu/x">cs50.harvard.edu/x</a></p></li>
+<li><p>R’s C API</p></li>
+<li><p>Run by R Contribution Working Group (RCWG)</p></li>
+</ul>
+</section>
+<section id="rcwg" class="slide level2">
+<h2>RCWG</h2>
+<p>Fosters a larger, more diverse community of contributors to base R.</p>
+<ul>
+<li><a href="https://contributor.r-project.org">contributor.r-project.org</a></li>
+<li><a href="https://www.meetup.com/r-contributors/">meetup.com/r-contributors</a></li>
+<li><a href="https://hachyderm.io/@R_Contributors">hachyderm.io/<span class="citation" data-cites="R_Contributors">@R_Contributors</span></a></li>
+</ul>
+</section>
+<section id="resources-rs-c-api" class="slide level2">
+<h2>Resources: R’s C API</h2>
+<ul>
+<li>Deep R: <a href="https://deepr.gagolewski.com/chapter/310-compiled.html" class="uri">https://deepr.gagolewski.com/chapter/310-compiled.html</a></li>
+<li>Advanced R, Hadley Wickham, (1st edn): <a href="http://adv-r.had.co.nz/C-interface.html" class="uri">http://adv-r.had.co.nz/C-interface.html</a></li>
+<li>Now You C Me, Davis Vaughn: <a href="https://blog.davisvaughan.com/posts/2019-03-02-now-you-c-me" class="uri">https://blog.davisvaughan.com/posts/2019-03-02-now-you-c-me</a></li>
+<li>Writing R Extensions (Ch 5 and 6): <a href="https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-exts.html" class="uri">https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-exts.html</a></li>
+<li>R internals (Hadley Wickham): <a href="https://github.com/hadley/r-internals" class="uri">https://github.com/hadley/r-internals</a></li>
+<li>R internals (R Core): <a href="https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-ints.html" class="uri">https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-ints.html</a></li>
+</ul>
+</section>
+<section id="thank-you-questions" class="slide level2 center-h">
+<h2>Thank you! Questions?</h2>
+<p><a href="https://ellakaye.github.io/c-for-r-users/#/title-slide" class="larger150">ellakaye.github.io/c-for-r-users</a></p>
+
 <!-- needs to be last chunk of presentation otherwise creates an extra slide -->
 <!-- requires Quarto v1.3 -->
 <!-- tint80 for border, tint20 for title -->
 <!-- this should hopefully no longer be necessary in a future version of Quarto -->
 <!-- https://github.com/quarto-dev/quarto-cli/issues/5038 -->
-<style type="text/css">
+<img data-src="images/slides_qrcode.svg" class="quarto-figure quarto-figure-center r-stretch"><style type="text/css">
 div.callout-note {
   border-left-color: #00A9CE !important;
 }
@@ -403,7 +885,7 @@ div.callout-caution.callout-style-default .callout-title {
 
 </div>
 </div>
-</section>
+</section></section>
     </div>
   </div>
 
@@ -428,15 +910,6 @@ div.callout-caution.callout-style-default .callout-title {
       // Full list of configuration options available at:
       // https://revealjs.com/config/
       Reveal.initialize({
-'controlsAuto': true,
-'previewLinksAuto': true,
-'pdfSeparateFragments': false,
-'autoAnimateEasing': "ease",
-'autoAnimateDuration': 1,
-'autoAnimateUnmatched': true,
-'menu': {"side":"left","useTextContentForMissingTitles":true,"markers":false,"loadIcons":false,"custom":[{"title":"Tools","icon":"<i class=\"fas fa-gear\"></i>","content":"<ul class=\"slide-menu-items\">\n<li class=\"slide-tool-item active\" data-item=\"0\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.fullscreen(event)\"><kbd>f</kbd> Fullscreen</a></li>\n<li class=\"slide-tool-item\" data-item=\"1\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.speakerMode(event)\"><kbd>s</kbd> Speaker View</a></li>\n<li class=\"slide-tool-item\" data-item=\"2\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.overview(event)\"><kbd>o</kbd> Slide Overview</a></li>\n<li class=\"slide-tool-item\" data-item=\"3\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.togglePdfExport(event)\"><kbd>e</kbd> PDF Export Mode</a></li>\n<li class=\"slide-tool-item\" data-item=\"4\"><a href=\"#\" onclick=\"RevealMenuToolHandlers.keyboardHelp(event)\"><kbd>?</kbd> Keyboard Help</a></li>\n</ul>"}],"openButton":true},
-'smaller': false,
-
 'controlsAuto': true,
 'previewLinksAuto': true,
 'pdfSeparateFragments': false,
@@ -615,7 +1088,6 @@ div.callout-caution.callout-style-default .callout-title {
 
         // reveal.js plugins
         plugins: [QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
-QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
 
           RevealMath,
           RevealNotes,
@@ -624,6 +1096,44 @@ QuartoLineHighlight, PdfExport, RevealMenu, QuartoSupport,
         ]
       });
     </script>
+    
+    <script>
+      // htmlwidgets need to know to resize themselves when slides are shown/hidden.
+      // Fire the "slideenter" event (handled by htmlwidgets.js) when the current
+      // slide changes (different for each slide format).
+      (function () {
+        // dispatch for htmlwidgets
+        function fireSlideEnter() {
+          const event = window.document.createEvent("Event");
+          event.initEvent("slideenter", true, true);
+          window.document.dispatchEvent(event);
+        }
+
+        function fireSlideChanged(previousSlide, currentSlide) {
+          fireSlideEnter();
+
+          // dispatch for shiny
+          if (window.jQuery) {
+            if (previousSlide) {
+              window.jQuery(previousSlide).trigger("hidden");
+            }
+            if (currentSlide) {
+              window.jQuery(currentSlide).trigger("shown");
+            }
+          }
+        }
+
+        // hookup for slidy
+        if (window.w3c_slidy) {
+          window.w3c_slidy.add_observer(function (slide_num) {
+            // slide_num starts at position 1
+            fireSlideChanged(null, w3c_slidy.slides[slide_num - 1]);
+          });
+        }
+
+      })();
+    </script>
+
     <script id="quarto-html-after-body" type="application/javascript">
     window.document.addEventListener("DOMContentLoaded", function (event) {
       const toggleBodyColorMode = (bsSheetEl) => {
