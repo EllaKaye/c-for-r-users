@@ -383,7 +383,9 @@ Fosters a larger, more diverse community of contributors to base R.
 
 ## Thank you! Questions? {.center-h}
 
-[ellakaye.github.io/c-for-r-users](https://ellakaye.github.io/c-for-r-users/#/title-slide){.larger150}
+[ella.m.kaye@warwick.ac.uk](mailto:ella.m.kaye@warwick.ac.uk){.larger125}
+
+[ellakaye.github.io/c-for-r-users](https://ellakaye.github.io/c-for-r-users/#/title-slide){.larger125}
 
 ![](images/slides_qrcode.svg){fig-align="center"}
 
