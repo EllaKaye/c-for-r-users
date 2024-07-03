@@ -1,8 +1,8 @@
 ---
 title: C for R users
-author: Ella Kaye
-date: 2024-07-10
-date-format: long
+author: 
+  - name: Ella Kaye
+  - name: useR! 2024, Salzburg
 format: 
   warwickpres-revealjs: 
     title-slide-attributes: 
@@ -11,8 +11,6 @@ format:
       data-background-position: 100% 0%
 execute:
   echo: true
-filters:
-  - line-highlight
 ---
 
 ## [ellakaye.github.io/c-for-r-users](https://ellakaye.github.io/c-for-r-users/#/title-slide) {.center-h}
@@ -195,8 +193,6 @@ At the C-level, all R objects are stored in a common datatype, the SEXP, or S-ex
 :::
 
 ## stem_leaf
-
-Mix of pure C and R's C API
 
 ```{r}
 #| eval: false
