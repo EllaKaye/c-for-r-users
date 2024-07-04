@@ -9,29 +9,23 @@ format:
       data-background-image: warwick-logo-white.png
       data-background-size: 15%
       data-background-position: 100% 0%
+    width: 1200
+    height: 675
 execute:
   echo: true
 ---
 
-## [ellakaye.github.io/c-for-r-users](https://ellakaye.github.io/c-for-r-users/#/title-slide) {.center-h}
+## Background
 
-```{r}
-#| echo: false
-#| eval: false # after running once
-library(qrcode)
-slides_code <- qr_code("https://ellakaye.github.io/c-for-r-users")
-generate_svg(slides_code, "images/slides_qrcode.svg")
-```
-
-![](images/slides_qrcode.svg){fig-align="center"}
-
-## About me 
-
-::: {.incremental}
 - Research Software Engineer at University of Warwick
 - Sustainability and EDI in the R Project (with Heather Turner)
-- R user/developer for 10 years
-- Learning C for about a year
+
+. . .
+
+<br>
+
+:::{.center-h .larger200 .primary}
+Fostering a larger, more diverse community of contributors to base R
 :::
 
 
@@ -69,12 +63,12 @@ C is a compiled language, meaning its code is translated directly into machine c
 ### As R users/developers
 
 - Write efficient, portable code
-- encounter C code when debugging
+- Encounter C code when debugging
 
 ### As R contributors
 
-- find root cause of bug 
-- propose a patch to the C code to fix a bug
+- Find root cause of bug 
+- Propose a patch to the C code to fix a bug
 
 # Writing high-performance code {.inverse}
 
@@ -106,7 +100,7 @@ In these cases it can make sense to code parts in C or C++ and call it from R.
 
 # Digging into a bug {.inverse}
 
-## When something doesn't look right
+## Irregularity in `stem()` display
 
 <https://bugs.r-project.org/show_bug.cgi?id=8934>
 
@@ -162,7 +156,7 @@ C_StemLeaf
 ![](images/C_StemLeaf-search.png)
 
 
-## C_StemLeaf
+## `C_StemLeaf()`
 
 R's C API
 
@@ -192,7 +186,7 @@ SEXP C_StemLeaf(SEXP x, SEXP scale, SEXP swidth, SEXP atom)
 At the C-level, all R objects are stored in a common datatype, the SEXP, or S-expression. All R objects are S-expressions so every C function that you create must return a SEXP as output and take SEXPs as inputs.
 :::
 
-## stem_leaf
+## `stem_leaf()`
 
 ```{r}
 #| eval: false
@@ -204,7 +198,7 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 
     R_rsort(x,n);
 
-    if(n <= 1) return FALSE;
+    if (n <= 1) return FALSE;
 
     //<more code here>
     
@@ -269,6 +263,7 @@ Want, e.g. `"#ba1"` to be interpretted as `"#bbaa11"`.
 
 :::{.smaller80}
 ```{c eval=FALSE}
+#| code-line-numbers: "|11" 
 /* #RRGGBB[AA] String to Internal Color Code */
 static rcolor rgb2col(const char *rgb)
 {
@@ -382,6 +377,14 @@ Fosters a larger, more diverse community of contributors to base R.
 - R internals (R Core): <https://cran.stat.auckland.ac.nz/doc/manuals/r-devel/R-ints.html>
 
 ## Thank you! Questions? {.center-h}
+
+```{r}
+#| echo: false
+#| eval: false # after running once
+library(qrcode)
+slides_code <- qr_code("https://ellakaye.github.io/c-for-r-users")
+generate_svg(slides_code, "images/slides_qrcode.svg")
+```
 
 [ella.m.kaye@warwick.ac.uk](mailto:ella.m.kaye@warwick.ac.uk){.larger125}
 
