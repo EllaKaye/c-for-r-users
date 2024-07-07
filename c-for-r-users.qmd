@@ -15,6 +15,8 @@ execute:
   echo: true
 ---
 
+## {background-image="images/r_sprint_group_friday.jpeg" background-size="contain"}
+
 ## Background
 
 - Research Software Engineer at University of Warwick
@@ -63,6 +65,7 @@ C is a compiled language, meaning its code is translated directly into machine c
 ### As R users/developers
 
 - Write efficient, portable code
+  - for efficiency, *almost certainly* want C++ with **Rcpp**
 - Encounter C code when debugging
 
 ### As R contributors
@@ -70,9 +73,8 @@ C is a compiled language, meaning its code is translated directly into machine c
 - Find root cause of bug 
 - Propose a patch to the C code to fix a bug
 
-# Writing high-performance code {.inverse}
 
-## Limits of R
+## Limits of R {visibility="hidden"}
 
 Sometimes you reach the limits of R:
 
@@ -81,24 +83,24 @@ Sometimes you reach the limits of R:
 
 In these cases it can make sense to code parts in C or C++ and call it from R.
 
-## Typical scenarios
+## Typical scenarios {visibility="hidden"}
 
 - Loops that can’t be vectorized because iterations depend on previous results
 - Recursive functions, or problems which involve calling functions millions of times
 - Problems that require advanced data structures and algorithms that R doesn’t provide
 
-## You *almost certainly* want C++ with Rcpp
+## You *almost certainly* want C++ with Rcpp {visibility="hidden"}
 
 - Protects you from many of the historical idiosyncracies of R's C API
 - Takes care of memory management
 - Provides many useful helper methods
 
-## But you *might* want/need C
+## But you *might* want/need C {visibility="hidden"}
 
 - Portability (e.g. can also call from Python)
 - Building on other people's C code
 
-# Digging into a bug {.inverse}
+# {background-image="images/stem-bug.jpg"}
 
 ## Irregularity in `stem()` display
 
@@ -140,12 +142,9 @@ function (x, scale = 1, width = 80, atom = 1e-08)
 
 ## There's C!
 
-`.Call(C_StemLeaf, as.double(x), scale, width, atom)`
-
-. . .
-
 ```{r}
 #| error: true
+#| output-location: fragment
 C_StemLeaf
 ```
 
@@ -226,21 +225,15 @@ stem_leaf(double *x, int n, double scale, int width, double atom)
 In the same file as C_StemLeaf
 :::
 
-## A note about interfaces
+## Interfaces / pryr
 
-We've seen `.Call()`
-
-In base R, there's also `.Internal()` and `.Primitive()`
+We've seen `.Call()`. In base R, there's also `.Internal()` and `.Primitive()`
 
 e.g. the source code for `tabulate` includes:
 
 ```{.r}
 .Internal(tabulate(bin, nbins))
 ```
-
-:::{.notes}
-First need to look for their C function name in src/main/names.c and then search the R source code. 
-:::
 
 We can find the underlying code on GitHub with
 
@@ -249,13 +242,21 @@ We can find the underlying code on GitHub with
 pryr::show_c_source(.Internal(tabulate(bin, nbins)))
 ```
 
-# Contributing {.inverse}
+We can also use **pryr** to find the SEXTYPE:
 
-# 3-digit hex case-study {.inverse}
+```{r}
+pryr::sexp_type(c(8.48, 9.58, 9.96))
+```
+
+:::{.notes}
+First need to look for their C function name in src/main/names.c and then search the R source code. 
+:::
+
+# #66CCBB {background-color="#66CCBB" .center-h .larger150}
+
+# #6CB {background-color="#6CB" .center-h .larger150}
 
 ## The original idea
-
-Want, e.g. `"#ba1"` to be interpretted as `"#bbaa11"`.
 
 ![](images/3-digit-hex-idea.png){fig-align="center" }
 
@@ -263,7 +264,7 @@ Want, e.g. `"#ba1"` to be interpretted as `"#bbaa11"`.
 
 :::{.smaller80}
 ```{c eval=FALSE}
-#| code-line-numbers: "|11" 
+#| code-line-numbers: "|7,11" 
 /* #RRGGBB[AA] String to Internal Color Code */
 static rcolor rgb2col(const char *rgb)
 {
@@ -294,7 +295,7 @@ static rcolor rgb2col(const char *rgb)
 
 :::{.smaller90}
 ```{c eval=FALSE}
-#| code-line-numbers: "9-16" 
+#| code-line-numbers: "9-16|5,13" 
 switch (strlen(rgb)) {
 case 9:
     a = 16 * hexdigit(rgb[7]) + hexdigit(rgb[8]);
