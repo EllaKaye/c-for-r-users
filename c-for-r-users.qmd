@@ -66,6 +66,7 @@ C is a compiled language, meaning its code is translated directly into machine c
 
 - Write efficient, portable code
   - for efficiency, *almost certainly* want C++ with **Rcpp**
+  - for portability, C
 - Encounter C code when debugging
 
 ### As R contributors
