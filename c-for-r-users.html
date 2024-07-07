@@ -409,6 +409,9 @@ useR! 2024, Salzburg
 </div>
 
 </section>
+<section id="section" class="slide level2" data-background-image="images/r_sprint_group_friday.jpeg" data-background-size="contain">
+<h2></h2>
+</section>
 <section id="background" class="slide level2">
 <h2>Background</h2>
 <ul>
@@ -468,7 +471,10 @@ useR! 2024, Salzburg
 <h2>Why C?</h2>
 <h3 id="as-r-usersdevelopers">As R users/developers</h3>
 <ul>
-<li>Write efficient, portable code</li>
+<li>Write efficient, portable code
+<ul>
+<li>for efficiency, <em>almost certainly</em> want C++ with <strong>Rcpp</strong></li>
+</ul></li>
 <li>Encounter C code when debugging</li>
 </ul>
 <h3 id="as-r-contributors">As R contributors</h3>
@@ -477,46 +483,13 @@ useR! 2024, Salzburg
 <li>Propose a patch to the C code to fix a bug</li>
 </ul>
 </section>
-<section>
-<section id="writing-high-performance-code" class="title-slide slide level1 inverse center">
-<h1>Writing high-performance code</h1>
 
-</section>
-<section id="limits-of-r" class="slide level2">
-<h2>Limits of R</h2>
-<p>Sometimes you reach the limits of R:</p>
-<ul>
-<li>Your code is still slow despite optimizing the computational approach and the R implementation</li>
-<li>You <em>could</em> speed up the R code, but it results in very obscure, convoluted code</li>
-</ul>
-<p>In these cases it can make sense to code parts in C or C++ and call it from R.</p>
-</section>
-<section id="typical-scenarios" class="slide level2">
-<h2>Typical scenarios</h2>
-<ul>
-<li>Loops that can’t be vectorized because iterations depend on previous results</li>
-<li>Recursive functions, or problems which involve calling functions millions of times</li>
-<li>Problems that require advanced data structures and algorithms that R doesn’t provide</li>
-</ul>
-</section>
-<section id="you-almost-certainly-want-c-with-rcpp" class="slide level2">
-<h2>You <em>almost certainly</em> want C++ with Rcpp</h2>
-<ul>
-<li>Protects you from many of the historical idiosyncracies of R’s C API</li>
-<li>Takes care of memory management</li>
-<li>Provides many useful helper methods</li>
-</ul>
-</section>
-<section id="but-you-might-wantneed-c" class="slide level2">
-<h2>But you <em>might</em> want/need C</h2>
-<ul>
-<li>Portability (e.g.&nbsp;can also call from Python)</li>
-<li>Building on other people’s C code</li>
-</ul>
-</section></section>
+
+
+
 <section>
-<section id="digging-into-a-bug" class="title-slide slide level1 inverse center">
-<h1>Digging into a bug</h1>
+<section id="section-1" class="title-slide slide level1 center" data-background-image="images/stem-bug.jpg">
+<h1></h1>
 
 </section>
 <section id="irregularity-in-stem-display" class="slide level2">
@@ -568,13 +541,12 @@ useR! 2024, Salzburg
 </section>
 <section id="theres-c" class="slide level2">
 <h2>There’s C!</h2>
-<p><code>.Call(C_StemLeaf, as.double(x), scale, width, atom)</code></p>
-<div class="fragment">
 <div class="cell" data-layout-align="center">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href=""></a>C_StemLeaf</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell fragment" data-layout-align="center">
 <div class="cell-output cell-output-error">
 <pre><code>Error in eval(expr, envir, enclos): object 'C_StemLeaf' not found</code></pre>
-</div>
 </div>
 </div>
 </section>
@@ -666,12 +638,22 @@ useR! 2024, Salzburg
           display:block!important;
       }</style></aside>
 </section>
-<section id="a-note-about-interfaces" class="slide level2">
-<h2>A note about interfaces</h2>
-<p>We’ve seen <code>.Call()</code></p>
-<p>In base R, there’s also <code>.Internal()</code> and <code>.Primitive()</code></p>
+<section id="interfaces-pryr" class="slide level2">
+<h2>Interfaces / pryr</h2>
+<p>We’ve seen <code>.Call()</code>. In base R, there’s also <code>.Internal()</code> and <code>.Primitive()</code></p>
 <p>e.g.&nbsp;the source code for <code>tabulate</code> includes:</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href=""></a><span class="fu">.Internal</span>(<span class="fu">tabulate</span>(bin, nbins))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>We can find the underlying code on GitHub with</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>pryr<span class="sc">::</span><span class="fu">show_c_source</span>(<span class="fu">.Internal</span>(<span class="fu">tabulate</span>(bin, nbins)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>We can also use <strong>pryr</strong> to find the SEXTYPE:</p>
+<div class="cell" data-layout-align="center">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href=""></a>pryr<span class="sc">::</span><span class="fu">sexp_type</span>(<span class="fu">c</span>(<span class="fl">8.48</span>, <span class="fl">9.58</span>, <span class="fl">9.96</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "REALSXP"</code></pre>
+</div>
+</div>
 <aside class="notes">
 <p>First need to look for their C function name in src/main/names.c and then search the R source code.</p>
 <style type="text/css">
@@ -685,53 +667,48 @@ useR! 2024, Salzburg
           overflow: hidden!important;
           display:block!important;
       }</style></aside>
-<p>We can find the underlying code on GitHub with</p>
-<div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href=""></a>pryr<span class="sc">::</span><span class="fu">show_c_source</span>(<span class="fu">.Internal</span>(<span class="fu">tabulate</span>(bin, nbins)))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
 </section></section>
-<section id="contributing" class="title-slide slide level1 inverse center">
-<h1>Contributing</h1>
+<section id="ccbb" class="title-slide slide level1 center-h larger150 center" data-background-color="#66CCBB">
+<h1>#66CCBB</h1>
 
 </section>
 
 <section>
-<section id="digit-hex-case-study" class="title-slide slide level1 inverse center">
-<h1>3-digit hex case-study</h1>
+<section id="cb" class="title-slide slide level1 center-h larger150 center" data-background-color="#6CB">
+<h1>#6CB</h1>
 
 </section>
 <section id="the-original-idea" class="slide level2">
 <h2>The original idea</h2>
-<p>Want, e.g.&nbsp;<code>"#ba1"</code> to be interpretted as <code>"#bbaa11"</code>.</p>
 
 <img data-src="images/3-digit-hex-idea.png" class="quarto-figure quarto-figure-center r-stretch"></section>
 <section id="the-existing-code" class="slide level2">
 <h2>The existing code</h2>
 <div class="smaller80">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb13" data-code-line-numbers="|11"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb13-1"><a href=""></a><span class="co">/* #RRGGBB[AA] String to Internal Color Code */</span></span>
-<span id="cb13-2"><a href=""></a><span class="dt">static</span> rcolor rgb2col<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>rgb<span class="op">)</span></span>
-<span id="cb13-3"><a href=""></a><span class="op">{</span></span>
-<span id="cb13-4"><a href=""></a>    <span class="dt">unsigned</span> <span class="dt">int</span> r <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> g <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> b <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> a <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* -Wall */</span></span>
-<span id="cb13-5"><a href=""></a>    <span class="cf">if</span><span class="op">(</span>rgb<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">!=</span> <span class="ch">'#'</span><span class="op">)</span></span>
-<span id="cb13-6"><a href=""></a>          error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
-<span id="cb13-7"><a href=""></a>    <span class="cf">switch</span> <span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
-<span id="cb13-8"><a href=""></a>    <span class="cf">case</span> <span class="dv">9</span><span class="op">:</span></span>
-<span id="cb13-9"><a href=""></a>          a <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">7</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">8</span><span class="op">]);</span></span>
-<span id="cb13-10"><a href=""></a>    <span class="cf">case</span> <span class="dv">7</span><span class="op">:</span></span>
-<span id="cb13-11"><a href=""></a>          r <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
-<span id="cb13-12"><a href=""></a>          g <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
-<span id="cb13-13"><a href=""></a>          b <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">5</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">6</span><span class="op">]);</span></span>
-<span id="cb13-14"><a href=""></a>          <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb13-15"><a href=""></a>    <span class="cf">default</span><span class="op">:</span></span>
-<span id="cb13-16"><a href=""></a>          error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
-<span id="cb13-17"><a href=""></a>    <span class="op">}</span></span>
-<span id="cb13-18"><a href=""></a></span>
-<span id="cb13-19"><a href=""></a>    <span class="cf">if</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">)</span> <span class="op">==</span> <span class="dv">7</span><span class="op">)</span> </span>
-<span id="cb13-20"><a href=""></a>        <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
-<span id="cb13-21"><a href=""></a>    <span class="cf">else</span></span>
-<span id="cb13-22"><a href=""></a>        <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span>
-<span id="cb13-23"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15" data-code-line-numbers="|7,11"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb15-1"><a href=""></a><span class="co">/* #RRGGBB[AA] String to Internal Color Code */</span></span>
+<span id="cb15-2"><a href=""></a><span class="dt">static</span> rcolor rgb2col<span class="op">(</span><span class="dt">const</span> <span class="dt">char</span> <span class="op">*</span>rgb<span class="op">)</span></span>
+<span id="cb15-3"><a href=""></a><span class="op">{</span></span>
+<span id="cb15-4"><a href=""></a>    <span class="dt">unsigned</span> <span class="dt">int</span> r <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> g <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> b <span class="op">=</span> <span class="dv">0</span><span class="op">,</span> a <span class="op">=</span> <span class="dv">0</span><span class="op">;</span> <span class="co">/* -Wall */</span></span>
+<span id="cb15-5"><a href=""></a>    <span class="cf">if</span><span class="op">(</span>rgb<span class="op">[</span><span class="dv">0</span><span class="op">]</span> <span class="op">!=</span> <span class="ch">'#'</span><span class="op">)</span></span>
+<span id="cb15-6"><a href=""></a>          error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
+<span id="cb15-7"><a href=""></a>    <span class="cf">switch</span> <span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb15-8"><a href=""></a>    <span class="cf">case</span> <span class="dv">9</span><span class="op">:</span></span>
+<span id="cb15-9"><a href=""></a>          a <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">7</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">8</span><span class="op">]);</span></span>
+<span id="cb15-10"><a href=""></a>    <span class="cf">case</span> <span class="dv">7</span><span class="op">:</span></span>
+<span id="cb15-11"><a href=""></a>          r <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
+<span id="cb15-12"><a href=""></a>          g <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
+<span id="cb15-13"><a href=""></a>          b <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">5</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">6</span><span class="op">]);</span></span>
+<span id="cb15-14"><a href=""></a>          <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb15-15"><a href=""></a>    <span class="cf">default</span><span class="op">:</span></span>
+<span id="cb15-16"><a href=""></a>          error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
+<span id="cb15-17"><a href=""></a>    <span class="op">}</span></span>
+<span id="cb15-18"><a href=""></a></span>
+<span id="cb15-19"><a href=""></a>    <span class="cf">if</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">)</span> <span class="op">==</span> <span class="dv">7</span><span class="op">)</span> </span>
+<span id="cb15-20"><a href=""></a>        <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb15-21"><a href=""></a>    <span class="cf">else</span></span>
+<span id="cb15-22"><a href=""></a>        <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span>
+<span id="cb15-23"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -739,25 +716,25 @@ useR! 2024, Salzburg
 <h2>The fix: part 1</h2>
 <div class="smaller90">
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb14" data-code-line-numbers="9-16"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb14-1"><a href=""></a><span class="cf">switch</span> <span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
-<span id="cb14-2"><a href=""></a><span class="cf">case</span> <span class="dv">9</span><span class="op">:</span></span>
-<span id="cb14-3"><a href=""></a>    a <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">7</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">8</span><span class="op">]);</span></span>
-<span id="cb14-4"><a href=""></a><span class="cf">case</span> <span class="dv">7</span><span class="op">:</span></span>
-<span id="cb14-5"><a href=""></a>    r <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
-<span id="cb14-6"><a href=""></a>    g <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
-<span id="cb14-7"><a href=""></a>    b <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">5</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">6</span><span class="op">]);</span></span>
-<span id="cb14-8"><a href=""></a>    <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb14-9"><a href=""></a><span class="cf">case</span> <span class="dv">5</span><span class="op">:</span> </span>
-<span id="cb14-10"><a href=""></a>  <span class="co">// Equivalent to 16 * hexdigit(rgb[4]) + hexdigit(rgb[4]);</span></span>
-<span id="cb14-11"><a href=""></a>  a <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
-<span id="cb14-12"><a href=""></a><span class="cf">case</span> <span class="dv">4</span><span class="op">:</span></span>
-<span id="cb14-13"><a href=""></a>  r <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
-<span id="cb14-14"><a href=""></a>  g <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
-<span id="cb14-15"><a href=""></a>  b <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">]);</span></span>
-<span id="cb14-16"><a href=""></a>  <span class="cf">break</span><span class="op">;</span></span>
-<span id="cb14-17"><a href=""></a><span class="cf">default</span><span class="op">:</span></span>
-<span id="cb14-18"><a href=""></a>    error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
-<span id="cb14-19"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16" data-code-line-numbers="9-16|5,13"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href=""></a><span class="cf">switch</span> <span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb16-2"><a href=""></a><span class="cf">case</span> <span class="dv">9</span><span class="op">:</span></span>
+<span id="cb16-3"><a href=""></a>    a <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">7</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">8</span><span class="op">]);</span></span>
+<span id="cb16-4"><a href=""></a><span class="cf">case</span> <span class="dv">7</span><span class="op">:</span></span>
+<span id="cb16-5"><a href=""></a>    r <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
+<span id="cb16-6"><a href=""></a>    g <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
+<span id="cb16-7"><a href=""></a>    b <span class="op">=</span> <span class="dv">16</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">5</span><span class="op">])</span> <span class="op">+</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">6</span><span class="op">]);</span></span>
+<span id="cb16-8"><a href=""></a>    <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb16-9"><a href=""></a><span class="cf">case</span> <span class="dv">5</span><span class="op">:</span> </span>
+<span id="cb16-10"><a href=""></a>  <span class="co">// Equivalent to 16 * hexdigit(rgb[4]) + hexdigit(rgb[4]);</span></span>
+<span id="cb16-11"><a href=""></a>  a <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">4</span><span class="op">]);</span></span>
+<span id="cb16-12"><a href=""></a><span class="cf">case</span> <span class="dv">4</span><span class="op">:</span></span>
+<span id="cb16-13"><a href=""></a>  r <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">1</span><span class="op">]);</span></span>
+<span id="cb16-14"><a href=""></a>  g <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">2</span><span class="op">]);</span></span>
+<span id="cb16-15"><a href=""></a>  b <span class="op">=</span> <span class="op">(</span><span class="dv">16</span> <span class="op">+</span> <span class="dv">1</span><span class="op">)</span> <span class="op">*</span> hexdigit<span class="op">(</span>rgb<span class="op">[</span><span class="dv">3</span><span class="op">]);</span></span>
+<span id="cb16-16"><a href=""></a>  <span class="cf">break</span><span class="op">;</span></span>
+<span id="cb16-17"><a href=""></a><span class="cf">default</span><span class="op">:</span></span>
+<span id="cb16-18"><a href=""></a>    error<span class="op">(</span>_<span class="op">(</span><span class="st">"invalid RGB specification"</span><span class="op">));</span></span>
+<span id="cb16-19"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </div>
 </section>
@@ -765,20 +742,20 @@ useR! 2024, Salzburg
 <h2>The fix: part 2</h2>
 <p>From</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb15-1"><a href=""></a><span class="cf">if</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">)</span> <span class="op">==</span> <span class="dv">7</span><span class="op">)</span> </span>
-<span id="cb15-2"><a href=""></a>    <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
-<span id="cb15-3"><a href=""></a><span class="cf">else</span></span>
-<span id="cb15-4"><a href=""></a>    <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb17-1"><a href=""></a><span class="cf">if</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">)</span> <span class="op">==</span> <span class="dv">7</span><span class="op">)</span> </span>
+<span id="cb17-2"><a href=""></a>    <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb17-3"><a href=""></a><span class="cf">else</span></span>
+<span id="cb17-4"><a href=""></a>    <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>to</p>
 <div class="cell" data-layout-align="center">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb16-1"><a href=""></a><span class="cf">switch</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
-<span id="cb16-2"><a href=""></a><span class="cf">case</span> <span class="dv">7</span><span class="op">:</span> </span>
-<span id="cb16-3"><a href=""></a><span class="cf">case</span> <span class="dv">4</span><span class="op">:</span></span>
-<span id="cb16-4"><a href=""></a>    <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
-<span id="cb16-5"><a href=""></a><span class="cf">default</span><span class="op">:</span></span>
-<span id="cb16-6"><a href=""></a>    <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span>
-<span id="cb16-7"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode numberSource c number-lines code-with-copy"><code class="sourceCode c"><span id="cb18-1"><a href=""></a><span class="cf">switch</span><span class="op">(</span>strlen<span class="op">(</span>rgb<span class="op">))</span> <span class="op">{</span></span>
+<span id="cb18-2"><a href=""></a><span class="cf">case</span> <span class="dv">7</span><span class="op">:</span> </span>
+<span id="cb18-3"><a href=""></a><span class="cf">case</span> <span class="dv">4</span><span class="op">:</span></span>
+<span id="cb18-4"><a href=""></a>    <span class="cf">return</span> R_RGB<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">);</span></span>
+<span id="cb18-5"><a href=""></a><span class="cf">default</span><span class="op">:</span></span>
+<span id="cb18-6"><a href=""></a>    <span class="cf">return</span> R_RGBA<span class="op">(</span>r<span class="op">,</span> g<span class="op">,</span> b<span class="op">,</span> a<span class="op">);</span></span>
+<span id="cb18-7"><a href=""></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <aside class="notes">
 <p>There were actually six files we needed to change, including documentation, tests and news</p>
