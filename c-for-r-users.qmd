@@ -1,6 +1,6 @@
 ---
 title: C for R users
-subtitle: <https://ellakaye.github.io/c-for-r-users>
+subtitle: "[ellakaye.github.io/c-for-r-users](https://ellakaye.github.io/c-for-r-users)"
 author: 
   - name: Ella Kaye
   - name: useR! 2024, Salzburg
