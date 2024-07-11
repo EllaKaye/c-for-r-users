@@ -12,9 +12,31 @@ format:
       data-background-position: 100% 0%
     width: 1200
     height: 675
+    include-in-header:
+      - meta.html
 execute:
   echo: true
 ---
+
+```{r meta}
+#| include: false
+#| eval: false # only run code block locally, don't render 
+library(metathis)
+meta() |> 
+  meta_name("github-repo" = "https://github.com/EllaKaye/c-for-r-users") |> 
+  meta_description("Slides for a talk on C for R users") |> 
+  meta_social(
+    title = "C for R users",
+    url = "https://ellakaye.github.io/c-for-r-users",
+    image = "https://raw.githubusercontent.com/EllaKaye/c-for-r-users/main/images/title-slide.png",
+    image_alt = "Title slide for C for R users, with title, author Ella Kaye, 2024-07-10",
+    twitter_card_type = "summary_large_image",
+    og_author = "Ella Kaye",
+  ) |> 
+  format() |> 
+  writeLines("meta.html")
+```
+
 
 ## {background-image="images/r_sprint_group_friday.jpeg" background-size="contain"}
 
